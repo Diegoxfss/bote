@@ -1,0 +1,125 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        #header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #conversation {
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+        }
+
+        .user-message, .bot-message {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            color: #007bff;
+            text-align: right;
+        }
+
+        .bot-message {
+            color: #28a745;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-all-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Q&A System</h1>
+        </div>
+        <div id="conversation">
+            {% for entry in conversation %}
+                <div class="message">
+                    <p class="{{ entry['user']|lower }}-message">{{ entry['user'] }}: {{ entry['user_question'] }}</p>
+                    <p class="{{ entry['bot']|lower }}-message">{{ entry['bot'] }}: {{ entry['bot_answer'] }}</p>
+                </div>
+            {% endfor %}
+            <button class="delete-all-button" onclick="deleteAllMessages()">Delete Entire Chat</button>
+        </div>
+    </div>
+    <form method="post" action="/ask">
+        <label for="user_query">User:</label>
+        <input type="text" id="user_query" name="user_query" required>
+        <button type="submit">Ask</button>
+    </form>
+
+    <!-- templates/index.html -->
+<!-- ... (previous HTML code) ... -->
+<script>
+    function deleteAllMessages() {
+        // Implement logic to delete the entire chat
+
+        // Remove all message elements from the DOM
+        var conversationDiv = document.getElementById("conversation");
+        while (conversationDiv.firstChild) {
+            conversationDiv.removeChild(conversationDiv.firstChild);
+        }
+
+        // Optionally, you may want to clear the conversation array in your JavaScript
+        // to ensure that the deleted messages are not re-rendered if the user interacts
+        // with the page again without refreshing.
+        conversation = [];
+
+        // Additional logic to update server-side data can be added here
+
+        alert("Entire chat deleted");
+    }
+</script>
+<!-- ... (remaining HTML code) ... -->
+
+</body>
+</html>
